@@ -15,14 +15,15 @@ playersRouter
   })
 
 playersRouter
-  .route('/MyPlayers')
+  .route('/MyRanks')
   .get((req, res, next) => {
-    PlayersService.getAllPlayersForUser(req.app.get('db'))
+    PlayersService.getAllContentForUser(req.app.get('db'), 1)
       .then(players => {
         res.json(PlayersService.serializePlayers(players))
       })
       .catch(next)
   })
+
 
 
 /* async/await syntax for promises */

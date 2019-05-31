@@ -6,7 +6,7 @@ const Treeize = require('treeize');
 const PlayersService = {
   getAllPlayers(db) {
     return db
-      .from('nba_players AS play')
+      .from('NBA_players AS play')
       .select(
         'play.name',
         'play.team',
@@ -18,20 +18,24 @@ const PlayersService = {
 
 
 
-  getAllPlayersForUser(db, user_id) {
+  getAllContentForUser(db, user_id) {
     return db
-      .from('nba_ranks AS ranks')
-      .where(`ranks.user_id = ${user_id}`)
-      .innerJoin('nba_players AS play', 'play.id = ranks.player_id')
+      .from('NBA_content AS ranks')
       .select(
+        'ranks.rank',
+        'ranks.comment',
         'play.name',
         'play.team',
         'play.position',
         'play.age',
         'play.id'
       )
-      .groupBy('ranks.rank');
+      .join('NBA_players AS play', 'play.id', '=', 'ranks.player_id')
+      .where('ranks.user_id', user_id)
+      .orderBy('ranks.rank');
   },
+
+
 
 
 
