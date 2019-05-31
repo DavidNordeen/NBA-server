@@ -1,59 +1,48 @@
 const express = require('express')
-const ThingsService = require('./things-service')
+const PlayersService = require('./things-service')
 const { requireAuth } = require('../middleware/basic-auth')
 
-const thingsRouter = express.Router()
+const playersRouter = express.Router()
 
-thingsRouter
+playersRouter
   .route('/')
   .get((req, res, next) => {
-    ThingsService.getAllThings(req.app.get('db'))
-      .then(things => {
-        res.json(ThingsService.serializeThings(things))
+    PlayersService.getAllPlayers(req.app.get('db'))
+      .then(players => {
+        res.json(PlayersService.serializePlayers(players))
       })
       .catch(next)
   })
 
-thingsRouter
-  .route('/:thing_id')
-  .all(requireAuth)
-  .all(checkThingExists)
-  .get((req, res) => {
-    res.json(ThingsService.serializeThing(res.thing))
-  })
-
-thingsRouter.route('/:thing_id/reviews/')
-.all(requireAuth)
-  .all(checkThingExists)
+playersRouter
+  .route('/MyPlayers')
   .get((req, res, next) => {
-    ThingsService.getReviewsForThing(
-      req.app.get('db'),
-      req.params.thing_id
-    )
-      .then(reviews => {
-        res.json(ThingsService.serializeThingReviews(reviews))
+    PlayersService.getAllPlayersForUser(req.app.get('db'))
+      .then(players => {
+        res.json(PlayersService.serializePlayers(players))
       })
       .catch(next)
   })
+
 
 /* async/await syntax for promises */
-async function checkThingExists(req, res, next) {
+async function checkPlayerExists(req, res, next) {
   try {
-    const thing = await ThingsService.getById(
+    const player = await PlayersService.getById(
       req.app.get('db'),
-      req.params.thing_id
+      req.params.player_id
     )
 
-    if (!thing)
+    if (!player)
       return res.status(404).json({
-        error: `Thing doesn't exist`
+        error: `Player doesn't exist`
       })
 
-    res.thing = thing
+    res.player = player
     next()
   } catch (error) {
     next(error)
   }
 }
 
-module.exports = thingsRouter
+module.exports = playersRouter

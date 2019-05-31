@@ -1,15 +1,16 @@
+'use strict';
 const AuthService = {
   getUserWithUserName(db, user_name) {
-    return db('thingful_users')
+    return db('NBA_users')
       .where({ user_name })
-      .first()
+      .first();
   },
   parseBasicToken(token) {
     return Buffer
       .from(token, 'base64')
       .toString()
-      .split(':')
+      .split(':');
   },
-}
+};
 
-module.exports = AuthService
+module.exports = AuthService;

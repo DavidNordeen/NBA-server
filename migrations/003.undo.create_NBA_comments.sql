@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS NBA_comments;

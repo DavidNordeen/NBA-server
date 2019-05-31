@@ -1,116 +1,74 @@
-const xss = require('xss')
-const Treeize = require('treeize')
+'use strict';
 
-const ThingsService = {
-  getAllThings(db) {
+const xss = require('xss');
+const Treeize = require('treeize');
+
+const PlayersService = {
+  getAllPlayers(db) {
     return db
-      .from('thingful_things AS thg')
+      .from('nba_players AS play')
       .select(
-        'thg.id',
-        'thg.title',
-        'thg.date_created',
-        'thg.content',
-        'thg.image',
-        ...userFields,
-        db.raw(
-          `count(DISTINCT rev) AS number_of_reviews`
-        ),
-        db.raw(
-          `AVG(rev.rating) AS average_review_rating`
-        ),
-      )
-      .leftJoin(
-        'thingful_reviews AS rev',
-        'thg.id',
-        'rev.thing_id',
-      )
-      .leftJoin(
-        'thingful_users AS usr',
-        'thg.user_id',
-        'usr.id',
-      )
-      .groupBy('thg.id', 'usr.id')
+        'play.name',
+        'play.team',
+        'play.position',
+        'play.age',
+        'play.id'
+      );
   },
+
+
+
+  getAllPlayersForUser(db, user_id) {
+    return db
+      .from('nba_ranks AS ranks')
+      .where(`ranks.user_id = ${user_id}`)
+      .innerJoin('nba_players AS play', 'play.id = ranks.player_id')
+      .select(
+        'play.name',
+        'play.team',
+        'play.position',
+        'play.age',
+        'play.id'
+      )
+      .groupBy('ranks.rank');
+  },
+
+
 
   getById(db, id) {
-    return ThingsService.getAllThings(db)
-      .where('thg.id', id)
-      .first()
+    return PlayersService.getAllPlayers(db)
+      .where('play.id', id)
+      .first();
   },
 
-  getReviewsForThing(db, thing_id) {
-    return db
-      .from('thingful_reviews AS rev')
-      .select(
-        'rev.id',
-        'rev.rating',
-        'rev.text',
-        'rev.date_created',
-        ...userFields,
-      )
-      .where('rev.thing_id', thing_id)
-      .leftJoin(
-        'thingful_users AS usr',
-        'rev.user_id',
-        'usr.id',
-      )
-      .groupBy('rev.id', 'usr.id')
+
+  serializePlayers(players) {
+    return players.map(this.serializePlayer);
   },
 
-  serializeThings(things) {
-    return things.map(this.serializeThing)
-  },
-
-  serializeThing(thing) {
-    const thingTree = new Treeize()
+  serializePlayer(player) {
+    const playerTree = new Treeize();
 
     // Some light hackiness to allow for the fact that `treeize`
     // only accepts arrays of objects, and we want to use a single
     // object.
-    const thingData = thingTree.grow([ thing ]).getData()[0]
+    const playerData = playerTree.grow([player]).getData()[0];
 
     return {
-      id: thingData.id,
-      title: xss(thingData.title),
-      content: xss(thingData.content),
-      date_created: thingData.date_created,
-      image: thingData.image,
-      user: thingData.user || {},
-      number_of_reviews: Number(thingData.number_of_reviews) || 0,
-      average_review_rating: Math.round(thingData.average_review_rating) || 0,
-    }
+      id: playerData.id,
+      name: xss(playerData.name),
+      team: xss(playerData.team),
+      position: xss(playerData.position),
+      age: xss(playerData.age),
+      user: playerData.user || {},
+    };
   },
+};
 
-  serializeThingReviews(reviews) {
-    return reviews.map(this.serializeThingReview)
-  },
+// const userFields = [
+//   'usr.id AS user:id',
+//   'usr.user_name AS user:user_name',
+//   'usr.full_name AS user:full_name',
+// ];
 
-  serializeThingReview(review) {
-    const reviewTree = new Treeize()
-
-    // Some light hackiness to allow for the fact that `treeize`
-    // only accepts arrays of objects, and we want to use a single
-    // object.
-    const reviewData = reviewTree.grow([ review ]).getData()[0]
-
-    return {
-      id: reviewData.id,
-      rating: reviewData.rating,
-      thing_id: reviewData.thing_id,
-      text: xss(reviewData.text),
-      user: reviewData.user || {},
-      date_created: reviewData.date_created,
-    }
-  },
-}
-
-const userFields = [
-  'usr.id AS user:id',
-  'usr.user_name AS user:user_name',
-  'usr.full_name AS user:full_name',
-  'usr.nickname AS user:nickname',
-  'usr.date_created AS user:date_created',
-  'usr.date_modified AS user:date_modified',
-]
-
-module.exports = ThingsService
+module.exports = PlayersService;
