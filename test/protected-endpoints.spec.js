@@ -10,7 +10,6 @@ describe('Protected endpoints', function() {
   const {
     testUsers,
     testPlayers,
-    testReviews,
   } = helpers.makePlayersFixtures();
 
   before('make knex instance', () => {
