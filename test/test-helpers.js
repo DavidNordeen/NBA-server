@@ -35,11 +35,11 @@ function makeUsersArray() {
   ]
 }
 
-function makeThingsArray(users) {
+function makePlayersArray(users) {
   return [
     {
       id: 1,
-      title: 'First test thing!',
+      title: 'First test player!',
       image: 'http://placehold.it/500x500',
       user_id: users[0].id,
       date_created: '2029-01-22T16:28:32.615Z',
@@ -47,7 +47,7 @@ function makeThingsArray(users) {
     },
     {
       id: 2,
-      title: 'Second test thing!',
+      title: 'Second test player!',
       image: 'http://placehold.it/500x500',
       user_id: users[1].id,
       date_created: '2029-01-22T16:28:32.615Z',
@@ -55,7 +55,7 @@ function makeThingsArray(users) {
     },
     {
       id: 3,
-      title: 'Third test thing!',
+      title: 'Third test player!',
       image: 'http://placehold.it/500x500',
       user_id: users[2].id,
       date_created: '2029-01-22T16:28:32.615Z',
@@ -63,7 +63,7 @@ function makeThingsArray(users) {
     },
     {
       id: 4,
-      title: 'Fourth test thing!',
+      title: 'Fourth test player!',
       image: 'http://placehold.it/500x500',
       user_id: users[3].id,
       date_created: '2029-01-22T16:28:32.615Z',
@@ -72,13 +72,13 @@ function makeThingsArray(users) {
   ]
 }
 
-function makeReviewsArray(users, things) {
+function makeReviewsArray(users, players) {
   return [
     {
       id: 1,
       rating: 2,
       text: 'First test review!',
-      thing_id: things[0].id,
+      player_id: players[0].id,
       user_id: users[0].id,
       date_created: '2029-01-22T16:28:32.615Z',
     },
@@ -86,7 +86,7 @@ function makeReviewsArray(users, things) {
       id: 2,
       rating: 3,
       text: 'Second test review!',
-      thing_id: things[0].id,
+      player_id: players[0].id,
       user_id: users[1].id,
       date_created: '2029-01-22T16:28:32.615Z',
     },
@@ -94,7 +94,7 @@ function makeReviewsArray(users, things) {
       id: 3,
       rating: 1,
       text: 'Third test review!',
-      thing_id: things[0].id,
+      player_id: players[0].id,
       user_id: users[2].id,
       date_created: '2029-01-22T16:28:32.615Z',
     },
@@ -102,7 +102,7 @@ function makeReviewsArray(users, things) {
       id: 4,
       rating: 5,
       text: 'Fourth test review!',
-      thing_id: things[0].id,
+      player_id: players[0].id,
       user_id: users[3].id,
       date_created: '2029-01-22T16:28:32.615Z',
     },
@@ -110,7 +110,7 @@ function makeReviewsArray(users, things) {
       id: 5,
       rating: 1,
       text: 'Fifth test review!',
-      thing_id: things[things.length - 1].id,
+      player_id: players[players.length - 1].id,
       user_id: users[0].id,
       date_created: '2029-01-22T16:28:32.615Z',
     },
@@ -118,7 +118,7 @@ function makeReviewsArray(users, things) {
       id: 6,
       rating: 2,
       text: 'Sixth test review!',
-      thing_id: things[things.length - 1].id,
+      player_id: players[players.length - 1].id,
       user_id: users[2].id,
       date_created: '2029-01-22T16:28:32.615Z',
     },
@@ -126,29 +126,29 @@ function makeReviewsArray(users, things) {
       id: 7,
       rating: 5,
       text: 'Seventh test review!',
-      thing_id: things[3].id,
+      player_id: players[3].id,
       user_id: users[0].id,
       date_created: '2029-01-22T16:28:32.615Z',
     },
   ];
 }
 
-function makeExpectedThing(users, thing, reviews=[]) {
+function makeExpectedPlayer(users, player, reviews=[]) {
   const user = users
-    .find(user => user.id === thing.user_id)
+    .find(user => user.id === player.user_id)
 
-  const thingReviews = reviews
-    .filter(review => review.thing_id === thing.id)
+  const playerReviews = reviews
+    .filter(review => review.player_id === player.id)
 
-  const number_of_reviews = thingReviews.length
-  const average_review_rating = calculateAverageReviewRating(thingReviews)
+  const number_of_reviews = playerReviews.length
+  const average_review_rating = calculateAverageReviewRating(playerReviews)
 
   return {
-    id: thing.id,
-    image: thing.image,
-    title: thing.title,
-    content: thing.content,
-    date_created: thing.date_created,
+    id: player.id,
+    image: player.image,
+    title: player.title,
+    content: player.content,
+    date_created: player.date_created,
     number_of_reviews,
     average_review_rating,
     user: {
@@ -171,9 +171,9 @@ function calculateAverageReviewRating(reviews) {
   return Math.round(sum / reviews.length)
 }
 
-function makeExpectedThingReviews(users, thingId, reviews) {
+function makeExpectedPlayerReviews(users, playerId, reviews) {
   const expectedReviews = reviews
-    .filter(review => review.thing_id === thingId)
+    .filter(review => review.player_id === playerId)
 
   return expectedReviews.map(review => {
     const reviewUser = users.find(user => user.id === review.user_id)
@@ -193,8 +193,8 @@ function makeExpectedThingReviews(users, thingId, reviews) {
   })
 }
 
-function makeMaliciousThing(user) {
-  const maliciousThing = {
+function makeMaliciousPlayer(user) {
+  const maliciousPlayer = {
     id: 911,
     image: 'http://placehold.it/500x500',
     date_created: new Date().toISOString(),
@@ -202,56 +202,56 @@ function makeMaliciousThing(user) {
     user_id: user.id,
     content: `Bad image <img src="https://url.to.file.which/does-not.exist" onerror="alert(document.cookie);">. But not <strong>all</strong> bad.`,
   }
-  const expectedThing = {
-    ...makeExpectedThing([user], maliciousThing),
+  const expectedPlayer = {
+    ...makeExpectedPlayer([user], maliciousPlayer),
     title: 'Naughty naughty very naughty &lt;script&gt;alert(\"xss\");&lt;/script&gt;',
     content: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
   }
   return {
-    maliciousThing,
-    expectedThing,
+    maliciousPlayer,
+    expectedPlayer,
   }
 }
 
-function makeThingsFixtures() {
+function makePlayersFixtures() {
   const testUsers = makeUsersArray()
-  const testThings = makeThingsArray(testUsers)
-  const testReviews = makeReviewsArray(testUsers, testThings)
-  return { testUsers, testThings, testReviews }
+  const testPlayers = makePlayersArray(testUsers)
+  const testReviews = makeReviewsArray(testUsers, testPlayers)
+  return { testUsers, testPlayers, testReviews }
 }
 
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
-      thingful_things,
-      thingful_users,
-      thingful_reviews
+      playerful_players,
+      playerful_users,
+      playerful_reviews
       RESTART IDENTITY CASCADE`
   )
 }
 
-function seedThingsTables(db, users, things, reviews=[]) {
+function seedPlayersTables(db, users, players, reviews=[]) {
   return db
-    .into('thingful_users')
+    .into('playerful_users')
     .insert(users)
     .then(() =>
       db
-        .into('thingful_things')
-        .insert(things)
+        .into('playerful_players')
+        .insert(players)
     )
     .then(() =>
-      reviews.length && db.into('thingful_reviews').insert(reviews)
+      reviews.length && db.into('playerful_reviews').insert(reviews)
     )
 }
 
-function seedMaliciousThing(db, user, thing) {
+function seedMaliciousPlayer(db, user, player) {
   return db
-    .into('thingful_users')
+    .into('playerful_users')
     .insert([user])
     .then(() =>
       db
-        .into('thingful_things')
-        .insert([thing])
+        .into('playerful_players')
+        .insert([player])
     )
 }
 
@@ -262,15 +262,15 @@ function makeAuthHeader(user) {
 
 module.exports = {
   makeUsersArray,
-  makeThingsArray,
-  makeExpectedThing,
-  makeExpectedThingReviews,
-  makeMaliciousThing,
+  makePlayersArray,
+  makeExpectedPlayer,
+  makeExpectedPlayerReviews,
+  makeMaliciousPlayer,
   makeReviewsArray,
 
-  makeThingsFixtures,
+  makePlayersFixtures,
   cleanTables,
-  seedThingsTables,
-  seedMaliciousThing,
+  seedPlayersTables,
+  seedMaliciousPlayer,
   makeAuthHeader,
 }

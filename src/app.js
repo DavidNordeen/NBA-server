@@ -9,13 +9,14 @@ const playersRouter = require('./players/players-router');
 
 const app = express();
 
+
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
   skip: () => NODE_ENV === 'test',
 }));
 app.use(cors());
 app.use(helmet());
 
-app.use('/api/things', playersRouter);
+app.use('/api/players', playersRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

@@ -3,15 +3,15 @@
 ## Setting Up
 
 - Install dependencies: `npm install`
-- Create development and test databases: `createdb thingful`, `createdb thingful-test`
-- Create database user: `createuser thingful`
+- Create development and test databases: `createdb playerful`, `createdb playerful-test`
+- Create database user: `createuser playerful`
 - Grant privileges to new user in `psql`:
-  - `GRANT ALL PRIVILEGES ON DATABASE thingful TO thingful`
-  - `GRANT ALL PRIVILEGES ON DATABASE "thingful-test" TO thingful`
+  - `GRANT ALL PRIVILEGES ON DATABASE playerful TO playerful`
+  - `GRANT ALL PRIVILEGES ON DATABASE "playerful-test" TO playerful`
 - Prepare environment file: `cp example.env .env`
   - Replace values in `.env` with your custom values if necessary.
-- Bootstrap development database: `MIGRATION_DB_NAME=thingful npm run migrate`
-- Bootstrap test database: `MIGRATION_DB_NAME=thingful-test npm run migrate`
+- Bootstrap development database: `MIGRATION_DB_NAME=playerful npm run migrate`
+- Bootstrap test database: `MIGRATION_DB_NAME=playerful-test npm run migrate`
 
 ### Configuring Postgres
 
@@ -32,8 +32,8 @@ timezone = 'UTC'
 
 ## Sample Data
 
-- To seed the database for development: `psql -U thingful -d thingful -a -f seeds/seed.thingful_tables.sql`
-- To clear seed data: `psql -U thingful -d thingful -a -f seeds/trunc.thingful_tables.sql`
+- To seed the database for development: `psql -U playerful -d playerful -a -f seeds/seed.playerful_tables.sql`
+- To clear seed data: `psql -U playerful -d playerful -a -f seeds/trunc.playerful_tables.sql`
 
 ## Scripts
 
