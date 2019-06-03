@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS NBA_players;
+DROP TABLE IF EXISTS nba_players;

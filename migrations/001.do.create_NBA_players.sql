@@ -1,4 +1,4 @@
-CREATE TABLE NBA_players (
+CREATE TABLE nba_players (
   name TEXT NOT NULL,
   team TEXT NOT NULL,
   position TEXT NOT NULL,

@@ -2,35 +2,34 @@
 
 const xss = require('xss');
 const Treeize = require('treeize');
-
 const PlayersService = {
   getAllPlayers(db) {
+
     return db
-      .from('NBA_players AS play')
+      .from('nba_players AS play')
       .select(
         'play.name',
         'play.team',
         'play.position',
         'play.age',
+        'play.rank',
         'play.id'
       );
   },
 
-
-
   getAllContentForUser(db, user_id) {
     return db
-      .from('NBA_content AS ranks')
+      .from('nba_content AS ranks')
       .select(
         'ranks.rank',
-        'ranks.comment',
+        'ranks.content',
         'play.name',
         'play.team',
         'play.position',
         'play.age',
         'play.id'
       )
-      .join('NBA_players AS play', 'play.id', '=', 'ranks.player_id')
+      .join('nba_players AS play', 'play.id', '=', 'ranks.player_id')
       .where('ranks.user_id', user_id)
       .orderBy('ranks.rank');
   },
@@ -64,7 +63,7 @@ const PlayersService = {
       team: xss(playerData.team),
       position: xss(playerData.position),
       age: xss(playerData.age),
-      user: playerData.user || {},
+      rank: xss(playerData.rank),
     };
   },
 };
