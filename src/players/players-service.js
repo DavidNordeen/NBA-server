@@ -17,22 +17,22 @@ const PlayersService = {
       );
   },
 
-  getAllContentForUser(db, user_id) {
-    return db
-      .from('nba_content AS ranks')
-      .select(
-        'ranks.rank',
-        'ranks.content',
-        'play.name',
-        'play.team',
-        'play.position',
-        'play.age',
-        'play.id'
-      )
-      .join('nba_players AS play', 'play.id', '=', 'ranks.player_id')
-      .where('ranks.user_id', user_id)
-      .orderBy('ranks.rank');
-  },
+  // getAllContentForUser(db, user_id) {
+  //   return db
+  //     .from('nba_content AS ranks')
+  //     .select(
+  //       'ranks.rank',
+  //       'ranks.content',
+  //       'play.name',
+  //       'play.team',
+  //       'play.position',
+  //       'play.age',
+  //       'play.id'
+  //     )
+  //     .join('nba_players AS play', 'play.id', '=', 'ranks.player_id')
+  //     .where('ranks.user_id', user_id)
+  //     .orderBy('ranks.rank');
+  // },
 
 
 

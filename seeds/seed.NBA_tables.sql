@@ -6,9 +6,6 @@ TRUNCATE
   NBA_content
   RESTART IDENTITY CASCADE;
 
-INSERT INTO NBA_users (user_name, full_name, password, id)
-VALUES
-  ('David123', 'David N', 'Password123!', 1);
   
 
 INSERT INTO NBA_players (name, team, position, age, rank, id)
@@ -24,18 +21,6 @@ VALUES
   ('Russell Westbrook',  'Milwaukee Bucks', 'SF', 24, 9, 9),
   ( 'Paul George',  'Milwaukee Bucks', 'SF', 24, 10, 10);
 
-INSERT INTO NBA_content (content, rank, player_id, user_id)
-VALUES
-('Ex. young and talented, not injury prone, clear MVP', 10, 1,1),
-('', 2, 2, 1),
-('', 3, 3, 1),
-('', 4, 4, 1),
-('', 5, 5, 1),
-('', 6, 6, 1),
-('', 7, 7, 1),
-('', 8, 8, 1),
-('', 9, 9, 1),
-('', 1, 10, 1);
-
-
 COMMIT;
+
+
