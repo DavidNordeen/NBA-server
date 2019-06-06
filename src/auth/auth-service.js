@@ -40,9 +40,11 @@ const AuthService = {
     });
   },
   parseBasicToken(token) {
-    return Buffer.from(token, 'base64')
+    const parseToken = Buffer.from(token, 'base64')
       .toString()
       .split(':');
+    console.log(parseToken, 'parseToken');
+    return parseToken;
   }
 };
 

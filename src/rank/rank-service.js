@@ -3,6 +3,7 @@
 const xss = require('xss');
 const Treeize = require('treeize');
 
+
 const RankService = {
   getAllContentForUser(db, user_id) {
     console.log(user_id);
@@ -35,6 +36,34 @@ const RankService = {
       .first();
   },
 
+  setContent(knex, rank, content, player_id, user_id) {
+    return knex
+      .select('*')
+      .from('nba_content')
+      .where('player_id', player_id)
+      .andWhere('user_id', user_id)
+      .then(function (row) {
+        if (row) {
+          return knex('nba_content')
+            .where('player_id', player_id)
+            .andWhere('user_id', user_id)
+            .update({ rank, content })
+            .returning('*')
+            .then(rows => {
+              return rows[0];
+            });
+        }
+        else {
+          return knex
+            .insert({ rank, content, player_id, user_id })
+            .into('nba_content')
+            .returning('*')
+            .then(rows => {
+              return rows[0];
+            });
+        }
+      });
+  },
 
   serializeRanks(ranks) {
     return ranks.map(this.serializeRank);
