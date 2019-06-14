@@ -8,26 +8,18 @@ const RankService = {
   getAllContentForUser(db, user_id) {
     console.log(user_id);
     return db
-      // .from('nba_content AS ranks')
-      // .join('nba_players AS play', 'play.id', '=', 'ranks.player_id')
-      // .select(
-      //   'ranks.content',
-      //   'ranks.player_id',
-      //   'ranks.user_id',
-      //   'play.name',
-      //   'play.team',
-      //   'play.position',
-      //   'play.age',
-      //   'play.rank',
-      //   'play.id'
-      // )
-      // .where('ranks.user_id', user_id)
-      // .orderBy('ranks.rank');
+
       .select('*', 'players.rank as defaultRank')
       .from('nba_players as players')
-      .leftJoin('nba_content as ranks', 'ranks.player_id', 'players.id')
-      .whereNull('ranks.user_id')
-      .orWhere('ranks.user_id', user_id);
+      .leftJoin('nba_content as ranks', function () {
+        this
+          .on('ranks.player_id', '=', 'players.id' )
+          .andOn('ranks.user_id', '=', user_id);
+
+      });
+
+    // .whereNull('ranks.user_id')
+    // .orWhere('ranks.user_id', user_id);
   },
 
   getById(db, id) {
@@ -43,11 +35,11 @@ const RankService = {
       .where('player_id', player_id)
       .andWhere('user_id', user_id)
       .then(function (row) {
-        if (row) {
+        if (row.length > 0) {
           return knex('nba_content')
             .where('player_id', player_id)
             .andWhere('user_id', user_id)
-            .update({ rank, content })
+            .update(rank ? { rank } : { content })
             .returning('*')
             .then(rows => {
               return rows[0];
@@ -60,10 +52,14 @@ const RankService = {
             .returning('*')
             .then(rows => {
               return rows[0];
+            })
+            .catch(err => {
+              console.log(err);
             });
         }
       });
   },
+
 
   serializeRanks(ranks) {
     return ranks.map(this.serializeRank);

@@ -6,14 +6,13 @@ const { requireAuth } = require('../middleware/jwt-auth');
 const jsonBodyParser = express.json();
 const ranksRouter = express.Router();
 
-//NOTE: CHANGED FROM BASIC-AUTH TO JWT-AUTH^^
-
 
 ranksRouter
   .route('/MyRanks')
-  .get((req, res, next) => {
+  .get(requireAuth, (req, res, next) => {
+    let user_id = req.user.id;
     console.log(req.params, 'req.params');
-    RankService.getAllContentForUser(req.app.get('db'), 1)
+    RankService.getAllContentForUser(req.app.get('db'), user_id)
       .then(players => {
         // res.json(RankService.serializeRanks(players));
         res.json(players);
