@@ -3,6 +3,7 @@
 const knex = require('knex');
 const app = require('../src/app');
 const helpers = require('./test-helpers');
+const supertest = require('./setup');
 
 describe('Protected endpoints', function() {
   let db;
