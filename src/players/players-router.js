@@ -10,7 +10,6 @@ playersRouter
   .get((req, res, next) => {
     PlayersService.getAllPlayers(req.app.get('db'))
       .then(players => {
-        console.log(players);
         res.json(PlayersService.serializePlayers(players));
       })
       .catch(next);

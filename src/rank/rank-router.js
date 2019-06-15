@@ -11,7 +11,7 @@ ranksRouter
   .route('/MyRanks')
   .get(requireAuth, (req, res, next) => {
     let user_id = req.user.id;
-    console.log(req.params, 'req.params');
+    
     RankService.getAllContentForUser(req.app.get('db'), user_id)
       .then(players => {
         // res.json(RankService.serializeRanks(players));

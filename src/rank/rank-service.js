@@ -6,7 +6,7 @@ const Treeize = require('treeize');
 
 const RankService = {
   getAllContentForUser(db, user_id) {
-    console.log(user_id);
+    
     return db
 
       .select('*', 'players.rank as defaultRank')
