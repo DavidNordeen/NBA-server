@@ -5,7 +5,7 @@ const Treeize = require('treeize');
 const PlayersService = {
   getAllPlayers(db) {
     console.log('inside of get all players', db);
-    return db
+    let result = db
       .from('nba_players AS play')
       .select(
         'play.name',
@@ -15,6 +15,8 @@ const PlayersService = {
         'play.rank',
         'play.id'
       );
+    console.log(result);
+    return result;
   },
 
   // getAllContentForUser(db, user_id) {
