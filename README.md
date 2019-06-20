@@ -1,3 +1,26 @@
+MIGRATION_DB_HOST=127.0.0.1
+MIGRATION_DB_PORT=5432
+MIGRATION_DB_NAME=NBA
+MIGRATION_DB_USER=david
+MIGRATION_DB_PASS=password
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Thingful Server
 
 ## Setting Up
