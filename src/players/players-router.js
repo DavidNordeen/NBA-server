@@ -8,12 +8,12 @@ const playersRouter = express.Router();
 playersRouter
   .route('/')
   .get((req, res, next) => {
-    throw 'hello David';
-    // PlayersService.getAllPlayers(req.app.get('db'))
-    //   .then(players => {
-    //     res.json(PlayersService.serializePlayers(players));
-    //   })
-    //   .catch(next);
+    console.log('hello from getAllPlayers!!!!!');
+    PlayersService.getAllPlayers(req.app.get('db'))
+      .then(players => {
+        res.json(PlayersService.serializePlayers(players));
+      })
+      .catch(next);
   });
 
 

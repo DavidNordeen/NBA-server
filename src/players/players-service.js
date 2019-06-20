@@ -4,7 +4,7 @@ const xss = require('xss');
 const Treeize = require('treeize');
 const PlayersService = {
   getAllPlayers(db) {
-
+    console.log('inside of get all players', db);
     return db
       .from('nba_players AS play')
       .select(
