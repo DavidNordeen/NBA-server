@@ -1,26 +1,31 @@
 
+# NBA Ranker
 
+This app allows users to rank NBA players for a fantasy basketball draft. User's ranks and comments are saved so they can be reviewed and updated at any point.
 
+## Homepage Screenshot
 
+![Homepage](https://github.com/DavidNordeen/NBA-Client/blob/master/BballRank.JPG)
 
+## Technology
 
-
-
-
-# Thingful Server
+* Node.js
+* Express
+* Postgres
+* Deployed via Heroku
 
 ## Setting Up
 
 - Install dependencies: `npm install`
-- Create development and test databases: `createdb playerful`, `createdb playerful-test`
-- Create database user: `createuser playerful`
+- Create development and test databases: `createdb nba`, `createdb nba-test`
+- Create database user: `createuser nba`
 - Grant privileges to new user in `psql`:
-  - `GRANT ALL PRIVILEGES ON DATABASE playerful TO playerful`
-  - `GRANT ALL PRIVILEGES ON DATABASE "playerful-test" TO playerful`
+  - `GRANT ALL PRIVILEGES ON DATABASE nba TO nba`
+  - `GRANT ALL PRIVILEGES ON DATABASE "nba-test" TO nba`
 - Prepare environment file: `cp example.env .env`
   - Replace values in `.env` with your custom values if necessary.
-- Bootstrap development database: `MIGRATION_DB_NAME=playerful npm run migrate`
-- Bootstrap test database: `MIGRATION_DB_NAME=playerful-test npm run migrate`
+- Bootstrap development database: `MIGRATION_DB_NAME=nba npm run migrate`
+- Bootstrap test database: `MIGRATION_DB_NAME=nba-test npm run migrate`
 
 ### Configuring Postgres
 
@@ -41,8 +46,8 @@ timezone = 'UTC'
 
 ## Sample Data
 
-- To seed the database for development: `psql -U playerful -d playerful -a -f seeds/seed.playerful_tables.sql`
-- To clear seed data: `psql -U playerful -d playerful -a -f seeds/trunc.playerful_tables.sql`
+- To seed the database for development: `psql -U nba -d nba -a -f seeds/seed.NBA_table.sql`
+- To clear seed data: `psql -U nba -d nba nba-a -f seeds/trunc.NBA_tables.sql`
 
 ## Scripts
 
