@@ -29,7 +29,7 @@ VALUES
   ( 'Rudy Gobert',  'Utah Jazz', 'C', 28, 17, 17),
   ( 'Clint Capela',  'Houston Rockets', 'C', 25, 18, 18),
   ( 'Damian Lillard',  'Portland Trailblazers', 'PG', 30, 19, 19),
-  ( 'Jrue Holiday',  'New Orleans Pelicans', 'PG', 30, 20, 20),
+  ( 'Jrue Holiday',  'New Orleans Pelicans', 'PG', 30, 20, 20)
   ;
 
 COMMIT;
