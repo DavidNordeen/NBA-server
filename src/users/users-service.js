@@ -3,7 +3,7 @@
 const xss = require('xss');
 const bcrypt = require('bcryptjs');
 
-const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
+// const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
 
 const UsersService = {
   hasUserWithUserName(db, user_name) {
@@ -20,22 +20,22 @@ const UsersService = {
       .returning('*')
       .then(([user]) => user);
   },
-  validatePassword(password) {
-    if (password.length < 4) {
-      return 'Password must be longer than 4 characters';
-    }
+  // validatePassword(password) {
+  //   if (password.length < 4) {
+  //     return 'Password must be longer than 4 characters';
+  //   }
 
-    if (password.length > 72) {
-      return 'Password should be less than 72 characters';
-    }
+  //   if (password.length > 72) {
+  //     return 'Password should be less than 72 characters';
+  //   }
 
-    if (password.startsWith(' ') || password.endsWith(' ')) {
-      return 'Password must not start or end with empty space';
-    }
+    // if (password.startsWith(' ') || password.endsWith(' ')) {
+    //   return 'Password must not start or end with empty space';
+    // }
 
-    if (!REGEX_UPPER_LOWER_NUMBER_SPECIAL.test(password)) {
-      return 'Password must contain 1 Uppercase, 1 Lowercase, 1 Number, and 1 Special Character';
-    }
+    // if (!REGEX_UPPER_LOWER_NUMBER_SPECIAL.test(password)) {
+    //   return 'Password must contain 1 Uppercase, 1 Lowercase, 1 Number, and 1 Special Character';
+    // }
 
     return null;
   },
