@@ -29,16 +29,16 @@ const UsersService = {
   //     return 'Password should be less than 72 characters';
   //   }
 
-    // if (password.startsWith(' ') || password.endsWith(' ')) {
-    //   return 'Password must not start or end with empty space';
-    // }
+  // if (password.startsWith(' ') || password.endsWith(' ')) {
+  //   return 'Password must not start or end with empty space';
+  // }
 
-    // if (!REGEX_UPPER_LOWER_NUMBER_SPECIAL.test(password)) {
-    //   return 'Password must contain 1 Uppercase, 1 Lowercase, 1 Number, and 1 Special Character';
-    // }
+  // if (!REGEX_UPPER_LOWER_NUMBER_SPECIAL.test(password)) {
+  //   return 'Password must contain 1 Uppercase, 1 Lowercase, 1 Number, and 1 Special Character';
+  // }
 
-    return null;
-  },
+  //   return null;
+  // },
   hashPassword(password) {
     return bcrypt.hash(password, 12);
   },
